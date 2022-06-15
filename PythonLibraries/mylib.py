@@ -185,7 +185,7 @@ def GetAsymmError(hist_Nominal, hists_Syst):
   out = ROOT.TGraphAsymmErrors(NBin, array("d", x), array("d", y),  array("d", x_lerr), array("d", x_rerr), array("d", y_lerr), array("d", y_rerr))
   return out
 
-def convertToGraph(h):
+def convertToGraph(h, xerrbar=True, yerrbar=True, skipMinThres=-9999999.):
 
   x = []
   x_err = []
@@ -198,10 +198,19 @@ def convertToGraph(h):
     x_r = h.GetXaxis().GetBinUpEdge(iBin)
     x_c = h.GetXaxis().GetBinCenter(iBin)
 
+    if h.GetBinContent(iBin)<=skipMinThres:
+      continue
+
     x.append(x_c)
-    x_err.append(x_r-x_c)
+    if xerrbar:
+      x_err.append(x_r-x_c)
+    else:
+      x_err.append(0.)
     y.append(h.GetBinContent(iBin))
-    y_err.append(h.GetBinError(iBin))
+    if yerrbar:
+      y_err.append(h.GetBinError(iBin))
+    else:
+      y_err.append(0.)
 
   gr = ROOT.TGraphAsymmErrors(len(x), array('d',x), array('d',y), array('d',x_err), array('d',x_err), array('d',y_err), array('d',y_err) )
   return gr
