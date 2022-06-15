@@ -1,6 +1,7 @@
 import os,ROOT,numpy
 import math
 from array import array
+import ctypes
 
 def predefColorCodes():
 
@@ -206,4 +207,27 @@ def convertToGraph(h):
   gr = ROOT.TGraphAsymmErrors(len(x), array('d',x), array('d',y), array('d',x_err), array('d',x_err), array('d',y_err), array('d',y_err) )
   return gr
 
+
+def GetMaximum(a, ErrorScale=0.):
+
+  NX = a.GetN()
+
+  maxval = -9999.
+  for i in range(0,NX):
+
+    x = ctypes.c_double(0.)
+    y = ctypes.c_double(0.)
+
+    a.GetPoint(i, x, y)
+
+    x = x.value
+    y = y.value
+
+    yerr_low  = a.GetErrorYlow(i)
+    yerr_high = a.GetErrorYhigh(i)
+
+    if (y+ErrorScale*yerr_high > maxval):
+      maxval = y+ErrorScale*yerr_high
+
+  return maxval
 
