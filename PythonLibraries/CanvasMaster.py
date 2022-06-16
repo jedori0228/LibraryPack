@@ -18,11 +18,11 @@ class CanvasMaster:
     if Mode==1:
 
       ## plot
-      self.X_PLOT = 11.6
+      self.X_PLOT = 12.1
       self.Y_PLOT = 12.5
 
       ## Gaps
-      self.X_TITLE_GAP = 2.
+      self.X_TITLE_GAP = 1.5
       self.X_LABEL_GAP = 1.
       self.Y_TITLE_GAP = 1.
       self.Y_LABEL_GAP = 1.
@@ -38,8 +38,8 @@ class CanvasMaster:
       self.Down_Y_PLOT = 2.
 
       ## shared
-      self.X_PLOT = 11.6
-      self.X_TITLE_GAP = 2.
+      self.X_PLOT = 12.1
+      self.X_TITLE_GAP = 1.5
       self.X_LABEL_GAP = 1.
 
       ## Base canvas
@@ -149,7 +149,7 @@ class CanvasMaster:
       hist_axis_up.GetYaxis().SetLabelSize(50) # 10
       hist_axis_up.GetYaxis().SetTitleFont(43)
       hist_axis_up.GetYaxis().SetTitleSize(100)
-      hist_axis_up.GetYaxis().SetTitleOffset(1.45)
+      hist_axis_up.GetYaxis().SetTitleOffset(1.2)
       #hist_axis_up.GetYaxis().SetMaxDigits(6)
 
       ##  Down plot
@@ -165,8 +165,8 @@ class CanvasMaster:
       hist_axis_down.GetYaxis().SetLabelFont(43)
       hist_axis_down.GetYaxis().SetLabelSize(50)
       hist_axis_down.GetYaxis().SetTitleFont(43)
-      hist_axis_down.GetYaxis().SetTitleSize(100)
-      hist_axis_down.GetYaxis().SetTitleOffset(1.45)
+      hist_axis_down.GetYaxis().SetTitleSize(60)
+      hist_axis_down.GetYaxis().SetTitleOffset(2.0)
 
 
       return hist_axis_up, hist_axis_down
