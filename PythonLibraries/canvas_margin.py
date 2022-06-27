@@ -1,5 +1,12 @@
 import os,ROOT
 
+def GetCanvases():
+
+  c = ROOT.TCanvas('c', '', 800, 800)
+
+  c_up = ROOT.TPad("c_up", "", 0, 0.25, 1, 1)
+  c_down = ROOT.TPad("c_down", "", 0, 0, 1, 0.25)
+
 def canvas_margin(c1, c1_up, c1_down):
 
   c1_up.SetTopMargin( 0.07 )
