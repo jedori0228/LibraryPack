@@ -12,10 +12,10 @@ class CanvasMaster:
   def __init__(self, Name, Mode):
 
     self.Name = Name
-    self.Mode = Mode
+    self.__Mode = Mode
 
     ## For single plot
-    if Mode==1:
+    if self.__Mode==1:
 
       ## plot
       self.X_PLOT = 12.1
@@ -31,7 +31,7 @@ class CanvasMaster:
       self.X_RIGHT_MARGIN = 0.6
 
     ## For rate (up) + ratio (down) plots
-    if Mode==2:
+    if self.__Mode==2:
 
       ## Y of Up and Down plots : reference
       self.Up_Y_PLOT = 10
@@ -53,6 +53,12 @@ class CanvasMaster:
       self.Y_TITLE_GAP = 1.
       self.Y_LABEL_GAP = 1.
 
+      self.Update()
+
+  def Update(self):
+
+    if self.__Mode==2:
+
       ## Now for Up pad
       self.Up_X_PAD = self.X_TITLE_GAP + self.X_LABEL_GAP + self.X_PLOT + self.X_RIGHT_MARGIN
       self.Up_Y_PAD = self.Up_Y_PLOT + self.PAD_GAP +self.Y_TOP_MARGIN
@@ -63,7 +69,7 @@ class CanvasMaster:
 
   def GetCanvas(self):
 
-    if self.Mode==1:
+    if self.__Mode==1:
 
       BASE_X_TOTAL = self.X_TITLE_GAP + self.X_LABEL_GAP + self.X_PLOT + self.X_RIGHT_MARGIN
       BASE_Y_TOTAL = self.Y_TITLE_GAP + self.Y_LABEL_GAP + self.Y_PLOT + self.Y_TOP_MARGIN
@@ -77,7 +83,7 @@ class CanvasMaster:
 
       return c_Base
 
-    elif self.Mode==2:
+    elif self.__Mode==2:
 
       BASE_X_TOTAL = self.Up_X_PAD
       BASE_Y_TOTAL = self.Down_Y_PAD + self.Up_Y_PLOT + self.Y_TOP_MARGIN
@@ -117,14 +123,14 @@ class CanvasMaster:
 
   def GetAxisHist(self, xMin, xMax, dx):
 
-    if self.Mode==1:
+    if self.__Mode==1:
 
       hist_axis = ROOT.TH1D('hist_axis_up', '', int( (xMax-xMin)/dx ), xMin, xMax)
       hist_axis.GetXaxis().SetLabelFont(43)
       hist_axis.GetXaxis().SetLabelSize(50)
       hist_axis.GetXaxis().SetTitleFont(43)
       hist_axis.GetXaxis().SetTitleSize(100)
-      #hist_axis.GetXaxis().SetTitleOffset(1.)
+      hist_axis.GetXaxis().SetTitleOffset(0.9)
 
       hist_axis.GetYaxis().SetLabelFont(43)
       hist_axis.GetYaxis().SetLabelSize(50)
@@ -134,7 +140,7 @@ class CanvasMaster:
 
       return hist_axis
 
-    elif self.Mode==2:
+    elif self.__Mode==2:
 
       hist_axis_up = ROOT.TH1D('hist_axis_up', '', int( (xMax-xMin)/dx ), xMin, xMax)
       hist_axis_down = ROOT.TH1D('hist_axis_down', '', int( (xMax-xMin)/dx ), xMin, xMax)
@@ -150,7 +156,7 @@ class CanvasMaster:
       hist_axis_up.GetYaxis().SetTitleFont(43)
       hist_axis_up.GetYaxis().SetTitleSize(100)
       hist_axis_up.GetYaxis().SetTitleOffset(1.2)
-      #hist_axis_up.GetYaxis().SetMaxDigits(6)
+      hist_axis_up.GetYaxis().SetMaxDigits(4)
 
       ##  Down plot
       hist_axis_down.SetTitle("")
