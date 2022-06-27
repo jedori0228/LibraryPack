@@ -216,8 +216,16 @@ def convertToGraph(h, xerrbar=True, yerrbar=True, skipMinThres=-9999999.):
   gr = ROOT.TGraphAsymmErrors(len(x), array('d',x), array('d',y), array('d',x_err), array('d',x_err), array('d',y_err), array('d',y_err) )
   return gr
 
+def GetHistMaximumInRange(h, xMin, xMax):
 
-def GetMaximum(a, ErrorScale=0.):
+  iBin_i = h.GetXaxis().FindBin(xMin)
+  iBin_f = h.GetXaxis().FindBin(xMax)
+  this_yMax = -999
+  for iBin in range(iBin_i,iBin_f+1):
+    this_yMax = max(this_yMax, h.GetBinContent(iBin))
+  return this_yMax
+
+def GetGraphMaximum(a, ErrorScale=0.):
 
   NX = a.GetN()
 
@@ -240,3 +248,45 @@ def GetMaximum(a, ErrorScale=0.):
 
   return maxval
 
+
+def GetProperDecimalString(dx_original):
+
+  dx = dx_original
+  dec = 1
+  for i in range(0,10):
+    newdx = float("%1.6f"%(dx*10))
+    belowOnePart = newdx-int(newdx)
+    dx = newdx
+    if belowOnePart==0:
+      dec = i+1
+      break
+  exec('global ret; ret = "%%1.%df"%%(dx_original)'%(dec))
+  #global ret
+  return ret
+
+def GetXBinNormalized2D(h):
+
+  for ix in range(0, h.GetXaxis().GetNbins()):
+    xBin = ix+1
+
+    sumOverY = 0.
+    for iy in range(0, h.GetYaxis().GetNbins()):
+      yBin = iy+1
+      sumOverY += h.GetBinContent(xBin, yBin)
+    for iy in range(0, h.GetYaxis().GetNbins()):
+      yBin = iy+1
+      this_val = h.GetBinContent(xBin, yBin)
+      if sumOverY>0:
+        h.SetBinContent(xBin, yBin, this_val/sumOverY)
+      else:
+        h.SetBinContent(xBin, yBin, 0.)
+
+  return h
+
+def EmptyHistogram(h):
+
+  h_out = h.Clone(h.GetName()+'_Empty')
+  for ix in range(0, h.GetXaxis().GetNbins()):
+    h_out.SetBinContent(ix+1, 0.)
+    h_out.SetBinError(ix+1, 0.)
+  return h_out
