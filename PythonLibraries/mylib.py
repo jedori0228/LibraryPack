@@ -290,3 +290,10 @@ def EmptyHistogram(h):
     h_out.SetBinContent(ix+1, 0.)
     h_out.SetBinError(ix+1, 0.)
   return h_out
+
+def RemovePadMargin(p):
+  p.SetTopMargin( 0. )
+  p.SetBottomMargin( 0. )
+  p.SetLeftMargin( 0. )
+  p.SetRightMargin( 0. )
+  return p
