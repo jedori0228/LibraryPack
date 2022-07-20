@@ -248,6 +248,28 @@ def GetGraphMaximum(a, ErrorScale=0.):
 
   return maxval
 
+def GetGraphMinimum(a, ErrorScale=0.):
+
+  NX = a.GetN()
+
+  minval = 1E9
+  for i in range(0,NX):
+
+    x = ctypes.c_double(0.)
+    y = ctypes.c_double(0.)
+
+    a.GetPoint(i, x, y)
+
+    x = x.value
+    y = y.value
+
+    yerr_low  = a.GetErrorYlow(i)
+    yerr_high = a.GetErrorYhigh(i)
+
+    if (y-ErrorScale*yerr_low < minval):
+      minval = y-ErrorScale*yerr_low
+
+  return minval
 
 def GetProperDecimalString(dx_original):
 
