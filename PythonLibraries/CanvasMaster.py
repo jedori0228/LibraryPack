@@ -116,15 +116,6 @@ class CanvasMaster:
 
       return c_Base, p_Up, p_Down
 
-  def GetAxisHist(self, xMin, xMax, dx):
-
-    this_bins = []
-    for ix in range(0, int( (xMax-xMin)/dx )):
-      this_bins.append( xMin + ix * dx )
-    this_bins.append(xMax)
-
-    return GetAxisHistCustomBinnings(self, this_bins)
-
   def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
 
     if self.__Mode==1:
@@ -180,3 +171,12 @@ class CanvasMaster:
 
 
       return hist_axis_up, hist_axis_down
+
+  def GetAxisHist(self, xMin, xMax, dx):
+
+    this_bins = []
+    for ix in range(0, int( (xMax-xMin)/dx )):
+      this_bins.append( xMin + ix * dx )
+    this_bins.append(xMax)
+
+    return self.GetAxisHistCustomBinnings(this_bins)
