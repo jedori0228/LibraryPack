@@ -118,19 +118,36 @@ class CanvasMaster:
 
   def GetAxisHist(self, xMin, xMax, dx):
 
+    this_bins = []
+    for ix in range(0, int( (xMax-xMin)/dx )):
+      this_bins.append( xMin + ix * dx )
+    this_bins.append(xMax)
+
+    return GetAxisHistCustomBinnings(self, this_bins)
+
+  def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
+
     if self.__Mode==1:
 
-      this_bins = []
-      for ix in range(0, int( (xMax-xMin)/dx )):
-        this_bins.append( xMin + ix * dx )
-      this_bins.append(xMax)
+      hist_axis = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
+      hist_axis.GetXaxis().SetLabelFont(43)
+      hist_axis.GetXaxis().SetLabelSize(50)
+      hist_axis.GetXaxis().SetTitleFont(43)
+      hist_axis.GetXaxis().SetTitleSize(90)
+      hist_axis.GetXaxis().SetTitleOffset(0.9)
 
-      return GetAxisHistCustomBinnings(self, this_bins)
+      hist_axis.GetYaxis().SetLabelFont(43)
+      hist_axis.GetYaxis().SetLabelSize(50)
+      hist_axis.GetYaxis().SetTitleFont(43)
+      hist_axis.GetYaxis().SetTitleSize(100)
+      hist_axis.GetYaxis().SetTitleOffset(1.2)
+
+      return hist_axis
 
     elif self.__Mode==2:
 
-      hist_axis_up = ROOT.TH1D('hist_axis_up', '', int( (xMax-xMin)/dx ), xMin, xMax)
-      hist_axis_down = ROOT.TH1D('hist_axis_down', '', int( (xMax-xMin)/dx ), xMin, xMax)
+      hist_axis_up = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
+      hist_axis_down = ROOT.TH1D('hist_axis_down', '', len(xBins)-1, array.array("d", xBins))
 
       hist_axis_up.SetTitle("")
 
@@ -163,22 +180,3 @@ class CanvasMaster:
 
 
       return hist_axis_up, hist_axis_down
-
-  def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
-
-    if self.__Mode==1:
-
-      hist_axis = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
-      hist_axis.GetXaxis().SetLabelFont(43)
-      hist_axis.GetXaxis().SetLabelSize(50)
-      hist_axis.GetXaxis().SetTitleFont(43)
-      hist_axis.GetXaxis().SetTitleSize(90)
-      hist_axis.GetXaxis().SetTitleOffset(0.9)
-
-      hist_axis.GetYaxis().SetLabelFont(43)
-      hist_axis.GetYaxis().SetLabelSize(50)
-      hist_axis.GetYaxis().SetTitleFont(43)
-      hist_axis.GetYaxis().SetTitleSize(100)
-      hist_axis.GetYaxis().SetTitleOffset(1.2)
-
-      return hist_axis
