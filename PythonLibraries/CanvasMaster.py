@@ -1,11 +1,6 @@
 import ROOT
-
-def RemovePadMargin(p):
-  p.SetTopMargin( 0. )
-  p.SetBottomMargin( 0. )
-  p.SetLeftMargin( 0. )
-  p.SetRightMargin( 0. )
-  return p
+import array
+import mylib
 
 class CanvasMaster:
 
@@ -75,7 +70,7 @@ class CanvasMaster:
       BASE_Y_TOTAL = self.Y_TITLE_GAP + self.Y_LABEL_GAP + self.Y_PLOT + self.Y_TOP_MARGIN
 
       c_Base = ROOT.TCanvas("c_Base_%s"%(self.Name), "", int(BASE_X_TOTAL*100), int(BASE_Y_TOTAL*100))
-      c_Base = RemovePadMargin(c_Base)
+      c_Base = mylib.RemovePadMargin(c_Base)
       c_Base.SetTopMargin( (self.Y_TOP_MARGIN)/BASE_Y_TOTAL )
       c_Base.SetBottomMargin( (self.Y_TITLE_GAP + self.Y_LABEL_GAP)/BASE_Y_TOTAL )
       c_Base.SetLeftMargin( (self.X_TITLE_GAP + self.X_LABEL_GAP)/BASE_X_TOTAL )
@@ -89,7 +84,7 @@ class CanvasMaster:
       BASE_Y_TOTAL = self.Down_Y_PAD + self.Up_Y_PLOT + self.Y_TOP_MARGIN
 
       c_Base = ROOT.TCanvas("c_Base_%s"%(self.Name), "", int(BASE_X_TOTAL*100), int(BASE_Y_TOTAL*100))
-      c_Base = RemovePadMargin(c_Base)
+      c_Base = mylib.RemovePadMargin(c_Base)
 
       p_Up = ROOT.TPad("p_Up_%s"%(self.Name), "",
              0.,
@@ -97,7 +92,7 @@ class CanvasMaster:
              (self.Up_X_PAD)/BASE_X_TOTAL,
              1.
              )
-      p_Up = RemovePadMargin(p_Up)
+      p_Up = mylib.RemovePadMargin(p_Up)
       p_Up.SetTopMargin( (self.Y_TOP_MARGIN)/self.Up_Y_PAD )
       p_Up.SetBottomMargin( (self.PAD_GAP)/self.Up_Y_PAD )
       p_Up.SetLeftMargin( (self.X_TITLE_GAP + self.X_LABEL_GAP)/self.Up_X_PAD )
@@ -111,7 +106,7 @@ class CanvasMaster:
                (self.Up_X_PAD)/BASE_X_TOTAL,
                (self.Down_Y_PAD)/BASE_Y_TOTAL
                )
-      p_Down = RemovePadMargin(p_Down)
+      p_Down = mylib.RemovePadMargin(p_Down)
       p_Down.SetTopMargin( (self.PAD_GAP)/self.Down_Y_PAD )
       p_Down.SetBottomMargin( (self.Y_TITLE_GAP + self.Y_LABEL_GAP)/self.Down_Y_PAD )
       p_Down.SetLeftMargin( (self.X_TITLE_GAP + self.X_LABEL_GAP)/(self.Up_X_PAD) )
@@ -123,9 +118,18 @@ class CanvasMaster:
 
   def GetAxisHist(self, xMin, xMax, dx):
 
+    this_bins = []
+    for ix in range(0, int( (xMax-xMin)/dx )):
+      this_bins.append( xMin + ix * dx )
+    this_bins.append(xMax)
+
+    return GetAxisHistCustomBinnings(self, this_bins)
+
+  def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
+
     if self.__Mode==1:
 
-      hist_axis = ROOT.TH1D('hist_axis_up', '', int( (xMax-xMin)/dx ), xMin, xMax)
+      hist_axis = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
       hist_axis.GetXaxis().SetLabelFont(43)
       hist_axis.GetXaxis().SetLabelSize(50)
       hist_axis.GetXaxis().SetTitleFont(43)
@@ -142,8 +146,8 @@ class CanvasMaster:
 
     elif self.__Mode==2:
 
-      hist_axis_up = ROOT.TH1D('hist_axis_up', '', int( (xMax-xMin)/dx ), xMin, xMax)
-      hist_axis_down = ROOT.TH1D('hist_axis_down', '', int( (xMax-xMin)/dx ), xMin, xMax)
+      hist_axis_up = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
+      hist_axis_down = ROOT.TH1D('hist_axis_down', '', len(xBins)-1, array.array("d", xBins))
 
       hist_axis_up.SetTitle("")
 
@@ -176,4 +180,3 @@ class CanvasMaster:
 
 
       return hist_axis_up, hist_axis_down
-

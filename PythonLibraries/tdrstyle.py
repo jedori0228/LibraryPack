@@ -124,8 +124,8 @@ def setTDRStyle():
   tdrStyle.SetStripDecimals(True)
   tdrStyle.SetTickLength(0.03, "XYZ")
   tdrStyle.SetNdivisions(510, "XYZ")
-  tdrStyle.SetPadTickX(1)  # To get tick marks on the opposite side of the frame
-  tdrStyle.SetPadTickY(1)
+  #tdrStyle.SetPadTickX(1)  # To get tick marks on the opposite side of the frame
+  #tdrStyle.SetPadTickY(1)
 
 # Change for log plots:
   tdrStyle.SetOptLogx(0)
