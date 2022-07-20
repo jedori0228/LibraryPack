@@ -129,7 +129,7 @@ class CanvasMaster:
       hist_axis.GetXaxis().SetLabelFont(43)
       hist_axis.GetXaxis().SetLabelSize(50)
       hist_axis.GetXaxis().SetTitleFont(43)
-      hist_axis.GetXaxis().SetTitleSize(100)
+      hist_axis.GetXaxis().SetTitleSize(90)
       hist_axis.GetXaxis().SetTitleOffset(0.9)
 
       hist_axis.GetYaxis().SetLabelFont(43)
