@@ -27,6 +27,7 @@ class CanvasMasterMINERvA:
     self.Y_PLOT = 7.
     self.Y_PAD_GAP = 2.0
     self.Y_TOP_MARGIN = 1.5
+    self.Y_LABEL_SPARE = 2.0
 
     self.Update()
 
