@@ -116,6 +116,26 @@ class CanvasMaster:
 
       return c_Base, p_Up, p_Down
 
+  def UpdateAxisHist(self, *hist_axis):
+
+    if self.__Mode==1:
+
+      hist_axis[0].GetXaxis().SetLabelFont(43)
+      hist_axis[0].GetXaxis().SetLabelSize(50)
+      hist_axis[0].GetXaxis().SetTitleFont(43)
+      hist_axis[0].GetXaxis().SetTitleSize(90)
+      hist_axis[0].GetXaxis().SetTitleOffset(0.9)
+
+      hist_axis[0].GetYaxis().SetLabelFont(43)
+      hist_axis[0].GetYaxis().SetLabelSize(50)
+      hist_axis[0].GetYaxis().SetTitleFont(43)
+      hist_axis[0].GetYaxis().SetTitleSize(100)
+      hist_axis[0].GetYaxis().SetTitleOffset(1.2)
+
+      return hist_axis[0]
+
+
+
   def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
 
     if self.__Mode==1:
