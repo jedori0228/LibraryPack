@@ -69,7 +69,7 @@ class CanvasMaster:
       BASE_X_TOTAL = self.X_TITLE_GAP + self.X_LABEL_GAP + self.X_PLOT + self.X_RIGHT_MARGIN
       BASE_Y_TOTAL = self.Y_TITLE_GAP + self.Y_LABEL_GAP + self.Y_PLOT + self.Y_TOP_MARGIN
 
-      c_Base = ROOT.TCanvas("c_Base_%s"%(self.Name), "", int(BASE_X_TOTAL*100), int(BASE_Y_TOTAL*100))
+      c_Base = ROOT.TCanvas(self.Name, "", int(BASE_X_TOTAL*100), int(BASE_Y_TOTAL*100))
       c_Base = mylib.RemovePadMargin(c_Base)
       c_Base.SetTopMargin( (self.Y_TOP_MARGIN)/BASE_Y_TOTAL )
       c_Base.SetBottomMargin( (self.Y_TITLE_GAP + self.Y_LABEL_GAP)/BASE_Y_TOTAL )
