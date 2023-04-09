@@ -172,10 +172,23 @@ class CanvasMaster:
 
       return hist_axis_up, hist_axis_down
 
-  def GetAxisHist(self, xMin, xMax, dx):
+  def GetAxisHist(self, xMin, xMax, dx=-1, nbin=-1):
+
+    if dx<0 and nbin<0:
+      raise Exception('[GetAxisHist] dx and nbin are not set or both negative; dx = %f, nbin = %d'%(dx, nbin))
 
     this_bins = []
-    for ix in range(0, int( (xMax-xMin)/dx )):
+    if dx>0 and nbin>0:
+      ## both dx and nbin is set, check validity
+      if int( (xMax-xMin)/dx )!=nbin:
+        raise Exception('[GetAxisHist] nbin from dx is %d, but nbin was given by %d'%(int( (xMax-xMin)/dx ), nbin))
+
+    if dx>0:
+      nbin = int( (xMax-xMin)/dx )
+    elif nbin>0:
+      dx = (xMax-xMin)/nbin
+
+    for ix in range(0, nbin):
       this_bins.append( xMin + ix * dx )
     this_bins.append(xMax)
 
