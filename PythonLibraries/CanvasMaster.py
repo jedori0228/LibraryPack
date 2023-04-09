@@ -130,7 +130,7 @@ class CanvasMaster:
       hist_axis[0].GetYaxis().SetLabelSize(50)
       hist_axis[0].GetYaxis().SetTitleFont(43)
       hist_axis[0].GetYaxis().SetTitleSize(100)
-      hist_axis[0].GetYaxis().SetTitleOffset(1.2)
+      hist_axis[0].GetYaxis().SetTitleOffset(1.1)
 
       return hist_axis[0]
 
@@ -170,7 +170,7 @@ class CanvasMaster:
       hist_axis_up.GetYaxis().SetLabelSize(50) # 10
       hist_axis_up.GetYaxis().SetTitleFont(43)
       hist_axis_up.GetYaxis().SetTitleSize(100)
-      hist_axis_up.GetYaxis().SetTitleOffset(1.2)
+      hist_axis_up.GetYaxis().SetTitleOffset(1.15)
       hist_axis_up.GetYaxis().SetMaxDigits(4)
 
       ##  Down plot
@@ -182,9 +182,10 @@ class CanvasMaster:
       hist_axis_down.GetXaxis().SetTitleSize(80)
       hist_axis_down.GetXaxis().SetTitleOffset(3.5)
 
-
       hist_axis_down.GetYaxis().SetLabelFont(43)
       hist_axis_down.GetYaxis().SetLabelSize(50)
+      hist_axis_down.SetNdivisions(504,"Y")
+      hist_axis_down.GetYaxis()
       hist_axis_down.GetYaxis().SetTitleFont(43)
       hist_axis_down.GetYaxis().SetTitleSize(60)
       hist_axis_down.GetYaxis().SetTitleOffset(2.0)
