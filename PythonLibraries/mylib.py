@@ -5,20 +5,25 @@ import ctypes
 
 def predefColorCodes():
 
-  colors = [
-ROOT.kRed,
-ROOT.kMagenta,
-ROOT.kOrange,
-ROOT.kGreen+2,
-ROOT.kCyan,
-ROOT.kBlue,
-ROOT.kViolet,
-ROOT.kGray,
-ROOT.kBlack+2,
-ROOT.kYellow+2,
-]
-
-  return colors
+  return [
+    ROOT.kRed,
+    ROOT.kBlue,
+    ROOT.kGreen + 2,
+    ROOT.kMagenta,
+    ROOT.kCyan,
+    ROOT.kYellow,
+    ROOT.kTeal - 3,
+    ROOT.kSpring + 3,
+    ROOT.kAzure - 2,
+    ROOT.kGray,
+    ROOT.kPink + 3,
+    ROOT.kAzure + 6,
+    ROOT.kTeal - 5,
+    ROOT.kOrange - 6,
+    ROOT.kMagenta + 3,
+    ROOT.kGreen - 4,
+    ROOT.kViolet + 5
+ ]
 
 def isclose(a, b, rel_tol=0.001, abs_tol=0.001):
   return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)

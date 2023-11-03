@@ -62,6 +62,25 @@ class CanvasMaster:
       self.Down_X_PAD = self.X_TITLE_GAP + self.X_LABEL_GAP + self.X_PLOT + self.X_RIGHT_MARGIN
       self.Down_Y_PAD = self.Y_TITLE_GAP + self.Y_LABEL_GAP + self.Down_Y_PLOT + self.PAD_GAP
 
+  def UpdateFor2D(self):
+
+    if self.__Mode==1:
+
+      self.X_PLOT = 18
+      self.X_RIGHT_MARGIN = 3
+
+      self.X_TITLE_GAP = 2.5
+      self.X_LABEL_GAP = 1.
+      self.Y_TITLE_GAP = 1.5
+      self.Y_LABEL_GAP = 1.
+
+  def UpdateHistFor2D(self, h):
+
+    if self.__Mode==1:
+
+      h.GetXaxis().SetTitleOffset(1.0)
+      h.GetYaxis().SetTitleOffset(1.0)
+
   def GetCanvas(self):
 
     if self.__Mode==1:
@@ -134,62 +153,56 @@ class CanvasMaster:
 
       return hist_axis[0]
 
+    elif self.__Mode==2:
+
+      ## Up plot
+
+      hist_axis[0].SetTitle("")
+      hist_axis[0].GetXaxis().SetLabelSize(0)
+
+      hist_axis[0].GetYaxis().SetLabelFont(43)
+      hist_axis[0].GetYaxis().SetLabelSize(50) # 10
+      hist_axis[0].GetYaxis().SetTitleFont(43)
+      hist_axis[0].GetYaxis().SetTitleSize(90)
+      hist_axis[0].GetYaxis().SetTitleOffset(1.20)
+      hist_axis[0].GetYaxis().SetMaxDigits(4)
+
+      ##  Down plot
+      hist_axis[1].SetTitle("")
+
+      hist_axis[1].GetXaxis().SetLabelFont(43)
+      hist_axis[1].GetXaxis().SetLabelSize(50)
+      hist_axis[1].GetXaxis().SetTitleFont(43)
+      hist_axis[1].GetXaxis().SetTitleSize(80)
+      #hist_axis[1].GetXaxis().SetTitleOffset(3.5)
+
+      hist_axis[1].GetYaxis().SetLabelFont(43)
+      hist_axis[1].GetYaxis().SetLabelSize(50)
+      hist_axis[1].SetNdivisions(504,"Y")
+      hist_axis[1].GetYaxis()
+      hist_axis[1].GetYaxis().SetTitleFont(43)
+      hist_axis[1].GetYaxis().SetTitleSize(70)
+      hist_axis[1].GetYaxis().SetTitleOffset(1.5)
+
+      return hist_axis[0], hist_axis[1]
+
 
 
   def GetAxisHistCustomBinnings(self, xBins, yBins=[]):
 
     if self.__Mode==1:
 
-      hist_axis = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
-      hist_axis.GetXaxis().SetLabelFont(43)
-      hist_axis.GetXaxis().SetLabelSize(50)
-      hist_axis.GetXaxis().SetTitleFont(43)
-      hist_axis.GetXaxis().SetTitleSize(90)
-      hist_axis.GetXaxis().SetTitleOffset(0.9)
-
-      hist_axis.GetYaxis().SetLabelFont(43)
-      hist_axis.GetYaxis().SetLabelSize(50)
-      hist_axis.GetYaxis().SetTitleFont(43)
-      hist_axis.GetYaxis().SetTitleSize(100)
-      hist_axis.GetYaxis().SetTitleOffset(1.2)
+      hist_axis = ROOT.TH1D('hist_axis_%s'%(self.Name), '', len(xBins)-1, array.array("d", xBins))
+      hist_axis = self.UpdateAxisHist(hist_axis)
 
       return hist_axis
 
     elif self.__Mode==2:
 
-      hist_axis_up = ROOT.TH1D('hist_axis_up', '', len(xBins)-1, array.array("d", xBins))
-      hist_axis_down = ROOT.TH1D('hist_axis_down', '', len(xBins)-1, array.array("d", xBins))
+      hist_axis_up = ROOT.TH1D('hist_axis_up_%s'%(self.Name), '', len(xBins)-1, array.array("d", xBins))
+      hist_axis_down = ROOT.TH1D('hist_axis_down_%s'%(self.Name), '', len(xBins)-1, array.array("d", xBins))
 
-      hist_axis_up.SetTitle("")
-
-      ## Up plot
-
-      hist_axis_up.GetXaxis().SetLabelSize(0)
-
-      hist_axis_up.GetYaxis().SetLabelFont(43)
-      hist_axis_up.GetYaxis().SetLabelSize(50) # 10
-      hist_axis_up.GetYaxis().SetTitleFont(43)
-      hist_axis_up.GetYaxis().SetTitleSize(90)
-      hist_axis_up.GetYaxis().SetTitleOffset(1.20)
-      hist_axis_up.GetYaxis().SetMaxDigits(4)
-
-      ##  Down plot
-      hist_axis_down.SetTitle("")
-
-      hist_axis_down.GetXaxis().SetLabelFont(43)
-      hist_axis_down.GetXaxis().SetLabelSize(50)
-      hist_axis_down.GetXaxis().SetTitleFont(43)
-      hist_axis_down.GetXaxis().SetTitleSize(80)
-      hist_axis_down.GetXaxis().SetTitleOffset(3.5)
-
-      hist_axis_down.GetYaxis().SetLabelFont(43)
-      hist_axis_down.GetYaxis().SetLabelSize(50)
-      hist_axis_down.SetNdivisions(504,"Y")
-      hist_axis_down.GetYaxis()
-      hist_axis_down.GetYaxis().SetTitleFont(43)
-      hist_axis_down.GetYaxis().SetTitleSize(70)
-      hist_axis_down.GetYaxis().SetTitleOffset(1.5)
-
+      hist_axis_up, hist_axis_down = self.UpdateAxisHist(hist_axis_up, hist_axis_down)
 
       return hist_axis_up, hist_axis_down
 
