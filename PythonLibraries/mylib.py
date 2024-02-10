@@ -324,3 +324,29 @@ def RemovePadMargin(p):
   p.SetLeftMargin( 0. )
   p.SetRightMargin( 0. )
   return p
+
+'''
+def ConvertTo1D(h_2D, name):
+
+  NXBins = h_2D.GetXaxis().GetNbins()
+  NYBins = h_2D.GetYaxis().GetNbins()
+
+  N1DBins = NXBins*NYBins
+
+  h_1D = TH1D(name, "", N1DBins, 1.*N1DBins)
+  bin_1D = 1
+  for i_y in range(1, h_2D.GetNbinsY() + 1):
+    for i_x in range(1, h_2D.GetNbinsX() + 1):
+       # Skip underflow and overflow bins in the TH2D
+       if i_x == 1 and i_y == 1:
+         continue  # Skip underflow bin
+         if i_x == h_2D.GetNbinsX() and i_y == h_2D.GetNbinsY():
+           continue  # Skip overflow bin
+         # Fill the corresponding bin in the TH1
+         h_1D.SetBinContent(bin_1D, h_2D.GetBinContent(i_x, i_y))
+
+         # Increment the bin index in the TH1
+         bin_1D += 1
+
+    return h_1D
+'''
