@@ -76,7 +76,7 @@ def GetErrorBandFromUpDown(hnom, h_up, h_dn):
 
     #print('[GetErrorBand] %1.2f, %1.2f, %1.2f '%(ynom, y0, y1))
 
-    g.SetPointError(ix, dx/2., dx/2., max(abs(ynom-y0), 0.), max(abs(y1-ynom), 0.))
+    g.SetPointError(ix, dx/2., dx/2., max(abs(y1-ynom), 0.), max(abs(ynom-y0), 0.))
 
   return g
 
