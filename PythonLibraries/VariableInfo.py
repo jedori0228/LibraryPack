@@ -1,6 +1,7 @@
 import ROOT
 from array import array
 from mylib import GetProperDecimalString
+import re
 
 class VariableInfo:
 
@@ -25,6 +26,7 @@ class VariableInfo:
     if len(CustomBinning)>0:
       self.xMin = self.CustomBinning[0]
       self.xMax = self.CustomBinning[-1]
+      self.nx = len(self.CustomBinning)-1
 
   def GetNRebin(self, current_dx):
     current_dx = round(current_dx, 5)
@@ -33,6 +35,13 @@ class VariableInfo:
       return round(self.dx/current_dx)
     else:
       return 1
+
+  def GetXaxisTitle(self):
+
+    if self.Unit=="":
+      return self.Latex
+    else:
+      return "%s (%s)"%(self.Latex, self.Unit)
 
   def GetYaxisTitle(self):
 
@@ -61,4 +70,19 @@ class VariableInfo:
         out.append( self.xMin + self.dx*i )
       out.append(self.xMax)
       return out
+
+
+def ExprToVar(expression, prefix):
+  # Define a regular expression to match variable names
+  variable_pattern = re.compile(r'\b([a-zA-Z_]\w*)\b')
+
+  # Replace variable names with the specified prefix
+  modified_expression = variable_pattern.sub(f'{prefix}\\1', expression)
+
+  # Replace "&&" to "and"
+  modified_expression = modified_expression.replace('&&','and')
+  # Replace "||" to "or"
+  modified_expression = modified_expression.replace('||','or')
+
+  return modified_expression
 
