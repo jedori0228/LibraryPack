@@ -37,6 +37,7 @@ class VariableInfo:
     if len(CustomBinning)>0:
       self.xMin = self.CustomBinning[0]
       self.xMax = self.CustomBinning[-1]
+      self.nx = len(self.CustomBinning)-1
 
   def GetNRebin(self, current_dx):
     current_dx = round(current_dx, 5)
@@ -74,4 +75,5 @@ class VariableInfo:
         out.append( self.xMin + self.dx*i )
       out.append(self.xMax)
       return out
+
 
