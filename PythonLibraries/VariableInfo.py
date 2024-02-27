@@ -1,6 +1,18 @@
-import ROOT
-from array import array
-from mylib import GetProperDecimalString
+def GetProperDecimalString(dx_original):
+  
+  dx = dx_original
+  dec = 1 
+  for i in range(0,10):
+    newdx = float("%1.6f"%(dx*10))
+    belowOnePart = newdx-int(newdx)
+    dx = newdx
+    if belowOnePart==0:
+      dec = i+1
+      break
+
+  format_string = f"%1.{dec}f"
+  ret = format_string % dx_original
+  return ret
 
 class VariableInfo:
 
@@ -34,6 +46,13 @@ class VariableInfo:
     else:
       return 1
 
+  def GetXaxisTitle(self):
+
+    if self.Unit=="":
+      return self.Latex
+    else:
+      return "%s (%s)"%(self.Latex, self.Unit)
+
   def GetYaxisTitle(self):
 
     if len(self.CustomBinning)==0:
@@ -44,12 +63,6 @@ class VariableInfo:
         return "%s/%s%s"%(self.EventUnit, binSizeString,self.Unit)
     else:
       return "%s per bin"%(self.EventUnit)
-
-  def GetEmptyHist(self, name):
-    if len(self.CustomBinning)==0:
-      return ROOT.TH1D(name, "", self.nx, self.xMin, self.xMax)
-    else:
-      return ROOT.TH1D(name, "", len(self.CustomBinning)-1, array('d', self.CustomBinning))
 
   def GetBinArray(self):
 

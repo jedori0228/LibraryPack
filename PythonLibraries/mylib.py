@@ -276,21 +276,6 @@ def GetGraphMinimum(a, ErrorScale=0.):
 
   return minval
 
-def GetProperDecimalString(dx_original):
-
-  dx = dx_original
-  dec = 1
-  for i in range(0,10):
-    newdx = float("%1.6f"%(dx*10))
-    belowOnePart = newdx-int(newdx)
-    dx = newdx
-    if belowOnePart==0:
-      dec = i+1
-      break
-  exec('global ret; ret = "%%1.%df"%%(dx_original)'%(dec))
-  #global ret
-  return ret
-
 def GetXBinNormalized2D(h):
 
   for ix in range(0, h.GetXaxis().GetNbins()):
