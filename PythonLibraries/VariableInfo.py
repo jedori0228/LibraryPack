@@ -16,7 +16,7 @@ def GetProperDecimalString(dx_original):
 
 class VariableInfo:
 
-  def __init__(self, Name, Expr="", Latex="", xMin=0., xMax=100., dx=1, CustomBinning=[], Unit="", IsSpillVar=False):
+  def __init__(self, Name, Expr="", Latex="", xMin=0., xMax=100., dx=1, CustomBinning=[], BinNormWidth=-1, Unit="", IsSpillVar=False, ytitle=""):
 
     self.Name = Name
     self.Expr = Expr
@@ -26,13 +26,16 @@ class VariableInfo:
     self.xMax = xMax
     self.dx = dx
     self.nx = round( (xMax-xMin)/dx )
-    self.CustomBinning = CustomBinning
     self.IsSpillVar = IsSpillVar
+    self.ytitle = ytitle
+
+    self.CustomBinning = CustomBinning
+    self.BinNormWidth = BinNormWidth
 
     if self.IsSpillVar:
       self.EventUnit = "Spills"
     else:
-      self.EventUnit = "Slices"
+      self.EventUnit = "Events"
 
     if len(CustomBinning)>0:
       self.xMin = self.CustomBinning[0]
@@ -56,14 +59,24 @@ class VariableInfo:
 
   def GetYaxisTitle(self):
 
+    if self.ytitle!="":
+      return self.ytitle
+
     if len(self.CustomBinning)==0:
       binSizeString = GetProperDecimalString(self.dx)
       if self.Unit=="":
         return "%s/%s"%(self.EventUnit, binSizeString)
       else:
-        return "%s/%s%s"%(self.EventUnit, binSizeString,self.Unit)
+        return "%s/(%s%s)"%(self.EventUnit, binSizeString,self.Unit)
     else:
-      return "%s per bin"%(self.EventUnit)
+      if self.BinNormWidth>0:
+        binSizeString = GetProperDecimalString(self.BinNormWidth)
+        if self.Unit=="":
+          return "%s/%s"%(self.EventUnit, binSizeString)
+        else:
+          return "%s/(%s%s)"%(self.EventUnit, binSizeString,self.Unit)
+      else:
+        return "%s per bin"%(self.EventUnit)
 
   def GetBinArray(self):
 
