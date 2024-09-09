@@ -29,6 +29,13 @@ def GetICARUSNuMIPOT(run, beam, prodname):
       #return 6.983230011348827e+18 ## BRUCE
       return 6.983230011348827e+18 ## JAESUNG
 
+    elif prodname=='2023ANuMIReproc':
+      return 5.08726e+19
+
+    elif prodname=='2023ANuMIReproc_Random15Percent':
+      return 6.96424e+18
+
+
     else:
       raise ValueError("[GetICARUSNuMIPOT] Wrong prodname %s for run %s"%(prodname, run))
 
@@ -49,6 +56,12 @@ def GetICARUSNuMIPOT(run, beam, prodname):
       #return 29182931.4684785E12 ### ARG commented out at 2024 Feb. 12th, we were using this number for technote plot
       #return 2.9300301931345543e+19 ## BRUCE
       return 2.9300301931345543e+19 ## JAESUNG
+
+    elif prodname=='2023ANuMIReproc':
+      return 1.99189e+20
+
+    elif prodname=='2023ANuMIReproc_Random15Percent':
+      return 2.87066e+19
 
     else:
       raise ValueError("[GetICARUSNuMIPOT] Wrong prodname %s for run %s"%(prodname, run))
@@ -107,6 +120,17 @@ def GetICARUSNuMILivetime(run, beam, prodname):
         #return 1453270.9883333333 ## JAESUNG with 1) 05/07/2024 GRL + 2) 240430_InitialBadSpillOnlyRun2 bad spill set
         return 1453270.9883333333 ## JAESUNG with 1) 05/07/2024 GRL + 2) 240506_UpdatedBadSpills bad spill set (comment: same as above)
 
+    elif prodname=='2023ANuMIReproc':
+      if beam==0:
+        return 8.35230e+06
+      else:
+        return 1.05959e+07
+    elif prodname=='2023ANuMIReproc_Random15Percent':
+      if beam==0:
+        raise ValueError("[GetICARUSNuMILivetime] Random15Percent on OffBeam is wrong")
+      else:
+        return 1.44929e+06
+
     else:
       raise ValueError("[GetICARUSNuMILivetime] Wrong prodname %s for run %s"%(prodname, run))
 
@@ -147,6 +171,16 @@ def GetICARUSNuMILivetime(run, beam, prodname):
         #return 6145486.905 ## JAESUNG with 1) 05/07/2024 GRL + 2) 240430_InitialBadSpillOnlyRun2 bad spill set
         return 6141553.965 ## JAESUNG with 1) 05/07/2024 GRL + 2) 240506_UpdatedBadSpills bad spill set
 
+    elif prodname=='2023ANuMIReproc':
+      if beam==0:
+        return 4.26013e+07
+      else:
+        return 4.19458e+07
+    elif prodname=='2023ANuMIReproc_Random15Percent':
+      if beam==0:
+        raise ValueError("[GetICARUSNuMILivetime] Random15Percent on OffBeam is wrong")
+      else:
+        return 6.01791e+06
 
     else:
       raise ValueError("[GetICARUSNuMILivetime] Wrong prodname %s for run %s"%(prodname, run))
