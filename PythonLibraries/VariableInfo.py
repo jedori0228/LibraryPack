@@ -25,7 +25,6 @@ class VariableInfo:
     self.xMin = xMin
     self.xMax = xMax
     self.dx = dx
-    self.nx = round( (xMax-xMin)/dx )
     self.IsSpillVar = IsSpillVar
     self.ytitle = ytitle
 
@@ -40,7 +39,15 @@ class VariableInfo:
     if len(CustomBinning)>0:
       self.xMin = self.CustomBinning[0]
       self.xMax = self.CustomBinning[-1]
-      self.nx = len(self.CustomBinning)-1
+
+  @property
+  def nx(self):
+    if len(self.CustomBinning)>0:
+      self.xMin = self.CustomBinning[0]
+      self.xMax = self.CustomBinning[-1]
+      return len(self.CustomBinning)-1
+    else:
+      return round( (self.xMax-self.xMin)/self.dx )
 
   def GetNRebin(self, current_dx):
     current_dx = round(current_dx, 5)
